@@ -2,9 +2,8 @@
   "name": "jobkan-helper",
   "version": "1.0.0",
   "description": "",
-  "main": "attendance.js",
   "scripts": {
-    "build": "web-ext build",
+    "build": "web-ext build --overwrite-dest",
     "start:firefox": "web-ext run --target=firefox-desktop",
     "start:chrome": "web-ext run --target=chromium",
     "test": "echo \"Error: no test specified\" && exit 1"

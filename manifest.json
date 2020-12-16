@@ -11,7 +11,7 @@
         "https://ssl.jobcan.jp/employee/attendance*"
       ],
       "js": [
-        "attendance.js"
+        "src/attendance.js"
       ]
     }
   ],
