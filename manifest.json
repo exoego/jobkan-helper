@@ -1,0 +1,22 @@
+{
+  "description": "Adds a page action to toggle applying CSS to pages.",
+  "manifest_version": 2,
+  "name": "jobkan-helper",
+  "version": "1.0",
+  "homepage_url": "https://github.com/exoego/jobkan-helper",
+
+  "content_scripts": [
+    {
+      "matches": [
+        "https://ssl.jobcan.jp/employee/attendance*"
+      ],
+      "js": [
+        "attendance.js"
+      ]
+    }
+  ],
+
+  "permissions": [
+  ]
+
+}
