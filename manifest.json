@@ -1,7 +1,7 @@
 {
   "description": "Adds a page action to toggle applying CSS to pages.",
   "manifest_version": 2,
-  "name": "jobkan-helper",
+  "name": "ジョブカン勤怠ヘルパー",
   "version": "1.0",
   "homepage_url": "https://github.com/exoego/jobkan-helper",
 
