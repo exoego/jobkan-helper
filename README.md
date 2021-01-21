@@ -1,3 +1,7 @@
+<p align="center">
+![ヒーローイメージ](docs/hero_image.png "ジョブカン勤怠ヘルパー")]
+</p>
+
 # jobkan-helper
 
 ジョブカン勤怠を便利にする **非公式** Web ブラウザ拡張です。<br>
