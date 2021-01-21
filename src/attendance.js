@@ -26,6 +26,25 @@ function minutesToHoursMinutes(allMinutes) {
     }
 }
 
+function pastOrFuture(cell, index, today) {
+    switch (cell.innerText) {
+        case "":
+            return {past: 0, future:0}
+        default:
+            const vacationTitle = cell.getAttribute("data-original-title")
+            // 半休か全休か
+            const vacationLength = vacationTitle.includes("0.5") ? 0.5 : 1.0;
+
+            // 今日自体は除きたいので、翌日の 0:00とする
+            const date = new Date(showedYear, showedMonth - 1, index + 2)
+            if (date < today) {
+                return {past: vacationLength, future: 0}
+            } else {
+                return {past: 0, future: vacationLength}
+            }
+    }
+}
+
 const messageBar = document.createElement("div");
 messageBar.style = `
    background: rgba(30, 30, 30, 0.75);
@@ -45,17 +64,26 @@ text.style = `
 `;
 messageBar.append(text);
 
-// 所定過不足累計: おそらく月初から当日までと思われるので、これを使う
 try {
+    const today = new Date()
+    const [_, showedYear, showedMonth] = document.querySelector("#search-result > div.row > div:nth-child(1) > div > div.card-body > table > tbody > tr:nth-child(1) > td")
+        .innerText.match(/(\d+)\D(\d+)/).map(txt => parseInt(txt, 10));
+
+    // 当月の有休を取得分 past と取得予定の future に仕分ける
+    const paidHolidays = Array
+        .from(document.querySelectorAll("#search-result > div.table-responsive.text-nowrap > table > tbody td:nth-child(11) > div"))
+        .map((el, index) => pastOrFuture(el,index, today))
+        .reduce((last, current) => {
+            return { past: last.past + current.past, future: last.future + current.future}
+        }, {past:0, future:0})
+
+    // 所定過不足累計: おそらく月初から当日までと思われるので、これを使う
     const laborHoursMinutes = timeToMinutes(document.querySelector("#search-result > div.row > div:nth-child(3) > div.card > div.card-body > table > tbody > tr:nth-child(14) > td").innerText);
 
-    // 各種休暇すべて合計。とりあえず 1.0日8時間、1.5日→12時間など計算してみます
-    const holidaysMinutes = Array
-        .from(document.querySelectorAll("#search-result > div.infotpl > table:nth-child(4) > tbody:nth-child(4) > tr > td"))
-        .map(e => daysToMinutes(e.innerText))
-        .reduce((minute, sum) => minute + sum, 0);
+    // 過ぎた有休のみ計算。未来の有休を含めてしまうと「今日まで」の残業時間が多くなってしまうため。
+    const actualHolidayMinutes = daysToMinutes(paidHolidays.past)
 
-    const overAndShorts = laborHoursMinutes + holidaysMinutes;
+    const overAndShorts = laborHoursMinutes + actualHolidayMinutes
 
     const hourMin = minutesToHoursMinutes(overAndShorts);
 
