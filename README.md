@@ -2,6 +2,12 @@
 
 ジョブカン勤怠を便利にする **非公式** Web ブラウザ拡張です。<br>
 
+## インストール
+
+[![ジョブカン勤怠ヘルパー on Chrome ウェブストア](docs/chrome_webstore_border.png "Chrome ウェブストアリンク"){:style="float: right;margin-right: 7px;margin-top: 7px;"} Chrome ウェブストアで<br>今すぐダウンロー<br>ド](https://chrome.google.com/webstore/detail/kkcgojenedjkbechhjdkbklolhchfbjn?hl=ja)
+
+[Firefox へのインストールリンクはこちら](https://github.com/exoego/jobkan-helper/releases/download/1.0.2/jobkan-helper-1.0.2.xpi) （GitHub からインストールします）
+
 ## ご利用前に
 
 このツールは **無保証** です。<br>
