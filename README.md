@@ -1,5 +1,5 @@
 <p align="center">
-<img src="docs/hero_image.png" alt="ジョブカン勤怠ヘルパー"/>
+<img src="docs/hero_image_2.png" alt="ジョブカン勤怠ヘルパー"/>
 </p>
 
 # jobkan-helper
