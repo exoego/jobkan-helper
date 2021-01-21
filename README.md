@@ -1,5 +1,5 @@
 <p align="center">
-![ヒーローイメージ](docs/hero_image.png "ジョブカン勤怠ヘルパー")]
+<img src="docs/hero_image.png" alt="ジョブカン勤怠ヘルパー"/>
 </p>
 
 # jobkan-helper
