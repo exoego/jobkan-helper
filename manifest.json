@@ -1,8 +1,8 @@
 {
-  "description": "Adds a page action to toggle applying CSS to pages.",
+  "description": "Add several utilities on Jobcan attendance board",
   "manifest_version": 2,
   "name": "ジョブカン勤怠ヘルパー",
-  "version": "1.0",
+  "version": "1.0.2",
   "homepage_url": "https://github.com/exoego/jobkan-helper",
 
   "content_scripts": [
