@@ -1,6 +1,6 @@
 {
   "name": "jobkan-helper",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "",
   "scripts": {
     "build": "web-ext build --overwrite-dest",
