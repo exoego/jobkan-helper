@@ -10,7 +10,7 @@
 
 | Google Chrome | Mozilla Firefox |
 |---|---|
-| [![ジョブカン勤怠ヘルパー on Chrome ウェブストア](docs/chrome_webstore_border.png "Chrome ウェブストアリンク")](https://chrome.google.com/webstore/detail/kkcgojenedjkbechhjdkbklolhchfbjn?hl=ja) | [インストールリンク](https://github.com/exoego/jobkan-helper/releases/download/1.0.2/jobkan-helper-1.0.2.xpi) <br>GitHub からインストールします。 |
+| [![ジョブカン勤怠ヘルパー on Chrome ウェブストア](docs/chrome_webstore_border.png "Chrome ウェブストアリンク")](https://chrome.google.com/webstore/detail/kkcgojenedjkbechhjdkbklolhchfbjn?hl=ja) | [インストールリンク](https://github.com/exoego/jobkan-helper/releases/download/1.0.3/jobkan-helper-1.0.3-fx.xpi) <br>GitHub からインストールします。 |
 
 ## ご利用前に
 
@@ -45,4 +45,5 @@ https://github.com/exoego/jobkan-helper で行ってください。<br>
 
 ## バージョン履歴
 
+* 1.0.3: 表示範囲に休暇取得日が含まれているとエラーになる問題を修正
 * 1.0.2: 出勤簿 過不足自動計算を Web ブラウザ拡張として移植
