@@ -7,6 +7,7 @@
     "start:firefox": "web-ext run --target=firefox-desktop",
     "start:chrome": "web-ext run --target=chromium",
     "lint": "eslint src/**/*.js",
+    "fix": "eslint --fix src/**/*.js",
     "test": "echo 0"
   },
   "author": "",
