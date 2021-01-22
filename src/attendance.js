@@ -26,7 +26,7 @@ function minutesToHoursMinutes(allMinutes) {
     }
 }
 
-function pastOrFuture(cell, index, today) {
+function pastOrFuture(showedYear, showedMonth, cell, index, today) {
     switch (cell.innerText) {
         case "":
             return {past: 0, future:0}
@@ -72,7 +72,7 @@ try {
     // 当月の有休を取得分 past と取得予定の future に仕分ける
     const paidHolidays = Array
         .from(document.querySelectorAll("#search-result > div.table-responsive.text-nowrap > table > tbody td:nth-child(11) > div"))
-        .map((el, index) => pastOrFuture(el,index, today))
+        .map((el, index) => pastOrFuture(showedYear, showedMonth, el,index, today))
         .reduce((last, current) => {
             return { past: last.past + current.past, future: last.future + current.future}
         }, {past:0, future:0})
