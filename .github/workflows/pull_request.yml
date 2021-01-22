@@ -23,5 +23,5 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
       - run: npm install
-      - run: npm run
+      - run: npm run build
       - run: npm test
