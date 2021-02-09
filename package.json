@@ -6,7 +6,7 @@
     "build": "web-ext build --overwrite-dest",
     "start:firefox": "web-ext run --target=firefox-desktop",
     "start:chrome": "web-ext run --target=chromium",
-    "lint": "eslint src/**/*.js",
+    "lint": "eslint src/**/*.js && web-ext lint",
     "fix": "eslint --fix src/**/*.js",
     "test": "echo 0"
   },
