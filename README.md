@@ -10,7 +10,7 @@
 
 | Google Chrome | Mozilla Firefox |
 |---|---|
-| [![ジョブカン勤怠ヘルパー on Chrome ウェブストア](docs/chrome_webstore_border.png "Chrome ウェブストアリンク")](https://chrome.google.com/webstore/detail/kkcgojenedjkbechhjdkbklolhchfbjn?hl=ja) | [インストールリンク](https://github.com/exoego/jobkan-helper/releases/download/1.0.3/jobkan-helper-1.0.3-fx.xpi) <br>GitHub からインストールします。 |
+| [![ジョブカン勤怠ヘルパー on Chrome ウェブストア](docs/chrome_webstore_border.png "Chrome ウェブストアリンク")](https://chrome.google.com/webstore/detail/kkcgojenedjkbechhjdkbklolhchfbjn?hl=ja) | [リリース一覧](https://github.com/exoego/jobkan-helper/releases) <br>Addon ADD-ONS では公開しておりません。GitHub リリースページからインストールします。 |
 
 ## ご利用前に
 
