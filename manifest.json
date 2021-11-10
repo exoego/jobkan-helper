@@ -18,6 +18,9 @@
       "matches": [
         "https://ssl.jobcan.jp/employee/attendance*"
       ],
+      "exclude_matches": [
+        "https://ssl.jobcan.jp/employee/attendance/edit*"
+      ],
       "js": [
         "src/attendance.js"
       ]
