@@ -33,6 +33,12 @@ function pastOrFuture (showedYear, showedMonth, cell, index, today) {
     }
     default: {
       const vacationTitle = cell.getAttribute('data-original-title')
+
+      // 時間休は有休ではないので稼働時間をつけない
+      if (vacationTitle.includes('時間休')) {
+        return { past: 0, future: 0 }
+      }
+
       // 半休か全休か
       const vacationLength = vacationTitle.includes('0.5') ? 0.5 : 1.0
 
