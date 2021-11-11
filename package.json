@@ -4,21 +4,20 @@
   "description": "",
   "scripts": {
     "build": "web-ext build --overwrite-dest",
-    "start:firefox": "web-ext run --target=firefox-desktop",
-    "start:chrome": "web-ext run --target=chromium",
+    "start:firefox": "web-ext run --target=firefox-desktop --start-url https://id.jobcan.jp/users/sign_in",
+    "start:chrome": "web-ext run --target=chromium --start-url https://id.jobcan.jp/users/sign_in",
     "lint": "eslint src/**/*.js && web-ext lint",
     "fix": "eslint --fix src/**/*.js",
     "test": "echo 0"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {},
   "devDependencies": {
     "eslint": "^7.18.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
-    "web-ext": "^5.4.1"
+    "web-ext": "^6.5.0"
   }
 }

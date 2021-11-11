@@ -37,7 +37,7 @@ https://github.com/exoego/jobkan-helper で行ってください。<br>
 
 1. `npm install`
 2. `npm run start:chrome` または `npm run start:firefox`
-3. 起動したブラウザで `https://id.jobcan.jp/users/sign_in` を開き、ジョブカンにログインする
+3. 起動したブラウザでジョブカンにログインする
 4. 変更した機能を試したいジョブカンのページを開く
 5. ソースコードを編集する
 6. ジョブカンのページをリロードし、変更を試す。もっと編集する場合は 5に戻る）
