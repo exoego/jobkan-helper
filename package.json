@@ -18,6 +18,6 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
-    "web-ext": "^6.5.0"
+    "web-ext": "^7.5.0"
   }
 }
