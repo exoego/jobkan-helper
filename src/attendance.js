@@ -85,8 +85,14 @@ try {
       return { past: last.past + current.past, future: last.future + current.future }
     }, { past: 0, future: 0 })
 
-  // 所定過不足累計: おそらく月初から当日までと思われるので、これを使う
-  const laborHoursMinutes = timeToMinutes(document.querySelector('#search-result > div.row > div:nth-child(3) > div.card > div.card-body > table > tbody > tr:nth-child(14) > td').innerText)
+  // 所定過不足累計: 【昨日時点の実労働時間】-【昨日時点までに経過した所定労働日数】×【1日分の所定労働時間】
+  // @see https://jobcan.zendesk.com/hc/ja/articles/360000600182-%E6%89%80%E5%AE%9A%E5%8A%B4%E5%83%8D%E6%99%82%E9%96%93%E3%81%AE%E9%81%8E%E4%B8%8D%E8%B6%B3%E6%99%82%E9%96%93%E3%82%92%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%81%93%E3%81%A8%E3%81%AF%E3%81%A7%E3%81%8D%E3%81%BE%E3%81%99%E3%81%8B-
+  const laborHoursMinutes = Array
+    .from(document.querySelectorAll('#search-result > div.row > div:nth-child(3) > div.card > div.card-body > table > tbody > tr'))
+    .reduce((acc, e) => {
+      acc[e.querySelector('th').innerText] = timeToMinutes(e.querySelector('td').innerText)
+      return acc
+    }, {})['所定過不足累計']
 
   // 過ぎた有休のみ計算。未来の有休を含めてしまうと「今日まで」の残業時間が多くなってしまうため。
   const actualHolidayMinutes = daysToMinutes(paidHolidays.past)
