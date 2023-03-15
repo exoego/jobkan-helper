@@ -33,7 +33,7 @@
     "48": "icons/icon-48.png"
   },
 
-  "applications": {
+  "browser_specific_settings": {
     "gecko": {
       "id": "{cd3599b8-5547-453f-8587-d4e20756074a}"
     }
