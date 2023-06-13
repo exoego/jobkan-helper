@@ -7,10 +7,10 @@ async function fetchAttendanceTable (url) {
   return attendancePageDom.querySelector('#search-result > div.row > div:nth-child(4) > div.card.jbc-card-bordered > div.card-body > table')
 }
 
-async function buildRemainingHolidaysTable () {
+async function fetchRemainingHolidays (holidayOptions_) {
   const attendanceTable = await fetchAttendanceTable('https://ssl.jobcan.jp/employee/attendance')
   const options = Array
-    .from(document.querySelectorAll('#holiday_id option'))
+    .from(holidayOptions_)
     .map(e => e.innerText.replace(/\(.*/, ''))
   const holidayOptions = [...new Set(options)]
 
@@ -24,7 +24,10 @@ async function buildRemainingHolidaysTable () {
   }).sort((left, right) => {
     return left.order - right.order
   })
+  return holidays
+}
 
+function buildRemainingHolidaysTable (holidays) {
   return '<table>' +
   holidays.map(holiday => {
     const cellTextColor =
@@ -61,7 +64,18 @@ async function buildRemainingHolidaysTable () {
   popup.append(text)
 
   try {
-    text.innerHTML = await buildRemainingHolidaysTable()
+    const holidayOptions = document.querySelectorAll('#holiday_id option')
+    const holidays = await fetchRemainingHolidays(holidayOptions)
+
+    holidayOptions.forEach(option => {
+      holidays.forEach(holiday => {
+        if (option.innerText.includes(holiday.holiday) && holiday.remaining === '0.00') {
+          option.disabled = true
+        }
+      })
+    })
+
+    text.innerHTML = buildRemainingHolidaysTable(holidays)
   } catch (e) {
     console.error(e)
     text.innerHTML = '😱 エラーが発生しました。<br>jobkan-helper にご報告いただけると助かります'
