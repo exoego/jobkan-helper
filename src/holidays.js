@@ -68,11 +68,12 @@ function buildRemainingHolidaysTable (holidays) {
     const holidays = await fetchRemainingHolidays(holidayOptions)
 
     holidayOptions.forEach(option => {
-      holidays.forEach(holiday => {
-        if (option.innerText.includes(holiday.holiday) && holiday.remaining === '0.00') {
-          option.disabled = true
-        }
+      const foundNoRemainingHoliday = holidays.find(holiday => {
+        return option.innerText.includes(holiday.holiday) && holiday.remaining === '0.00'
       })
+      if (foundNoRemainingHoliday) {
+        option.disabled = true
+      }
     })
 
     text.innerHTML = buildRemainingHolidaysTable(holidays)
