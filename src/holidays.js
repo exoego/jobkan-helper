@@ -7,19 +7,19 @@ async function fetchAttendanceTable (url) {
   return attendancePageDom.querySelector('#search-result > div.row > div:nth-child(4) > div.card.jbc-card-bordered > div.card-body > table')
 }
 
-async function fetchRemainingHolidays (holidayOptions_) {
+async function fetchRemainingHolidays (holidayOptions) {
   const attendanceTable = await fetchAttendanceTable('https://ssl.jobcan.jp/employee/attendance')
   const options = Array
-    .from(holidayOptions_)
+    .from(holidayOptions)
     .map(e => e.innerText.replace(/\(.*/, ''))
-  const holidayOptions = [...new Set(options)]
+  const holidayOptionLabels = [...new Set(options)]
 
   const holidays = Array.from(attendanceTable.querySelectorAll('tr')).map(row => {
     const holiday = row.querySelector('th').innerText.replace('※', '').replace(/・.+/, '')
     const remaining = row.querySelector('td').innerText
-    const index = holidayOptions.indexOf(holiday)
+    const index = holidayOptionLabels.indexOf(holiday)
     // 元のドロップダウン選択肢の順に並べる。ドロップダウンにないものは末尾
-    const order = index === -1 ? holidayOptions.length : index
+    const order = index === -1 ? holidayOptionLabels.length : index
     return { holiday, remaining, order }
   }).sort((left, right) => {
     return left.order - right.order
