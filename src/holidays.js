@@ -7,24 +7,27 @@ async function fetchAttendanceTable (url) {
   return attendancePageDom.querySelector('#search-result > div.row > div:nth-child(4) > div.card.jbc-card-bordered > div.card-body > table')
 }
 
-async function buildRemainingHolidaysTable () {
+async function fetchRemainingHolidays (holidayOptions) {
   const attendanceTable = await fetchAttendanceTable('https://ssl.jobcan.jp/employee/attendance')
   const options = Array
-    .from(document.querySelectorAll('#holiday_id option'))
+    .from(holidayOptions)
     .map(e => e.innerText.replace(/\(.*/, ''))
-  const holidayOptions = [...new Set(options)]
+  const holidayOptionLabels = [...new Set(options)]
 
   const holidays = Array.from(attendanceTable.querySelectorAll('tr')).map(row => {
-    const holiday = row.querySelector('th').innerText
+    const holiday = row.querySelector('th').innerText.replace('※', '').replace(/・.+/, '')
     const remaining = row.querySelector('td').innerText
-    const index = holidayOptions.indexOf(holiday)
+    const index = holidayOptionLabels.indexOf(holiday)
     // 元のドロップダウン選択肢の順に並べる。ドロップダウンにないものは末尾
-    const order = index === -1 ? holidayOptions.length : index
+    const order = index === -1 ? holidayOptionLabels.length : index
     return { holiday, remaining, order }
   }).sort((left, right) => {
     return left.order - right.order
   })
+  return holidays
+}
 
+function buildRemainingHolidaysTable (holidays) {
   return '<table>' +
   holidays.map(holiday => {
     const cellTextColor =
@@ -61,7 +64,19 @@ async function buildRemainingHolidaysTable () {
   popup.append(text)
 
   try {
-    text.innerHTML = await buildRemainingHolidaysTable()
+    const holidayOptions = document.querySelectorAll('#holiday_id option')
+    const holidays = await fetchRemainingHolidays(holidayOptions)
+
+    holidayOptions.forEach(option => {
+      const foundNoRemainingHoliday = holidays.find(holiday => {
+        return option.innerText.includes(holiday.holiday) && holiday.remaining === '0.00'
+      })
+      if (foundNoRemainingHoliday) {
+        option.disabled = true
+      }
+    })
+
+    text.innerHTML = buildRemainingHolidaysTable(holidays)
   } catch (e) {
     console.error(e)
     text.innerHTML = '😱 エラーが発生しました。<br>jobkan-helper にご報告いただけると助かります'
