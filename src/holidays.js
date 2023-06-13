@@ -15,7 +15,7 @@ async function buildRemainingHolidaysTable () {
   const holidayOptions = [...new Set(options)]
 
   const holidays = Array.from(attendanceTable.querySelectorAll('tr')).map(row => {
-    const holiday = row.querySelector('th').innerText
+    const holiday = row.querySelector('th').innerText.replace('※', '').replace(/・.+/, '')
     const remaining = row.querySelector('td').innerText
     const index = holidayOptions.indexOf(holiday)
     // 元のドロップダウン選択肢の順に並べる。ドロップダウンにないものは末尾
