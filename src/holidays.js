@@ -91,6 +91,8 @@ function buildRemainingHolidaysTable (holidays) {
         })
         if (foundNoRemainingHoliday) {
           option.disabled = true
+        } else {
+          option.disabled = false
         }
       })
 
