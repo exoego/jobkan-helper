@@ -69,6 +69,16 @@ function buildRemainingHolidaysTable (holidays) {
   yearSelector.addEventListener('change', render)
   monthSelector.addEventListener('change', render)
 
+  // ポップアップカレンダーで年月日が変わった時に、change イベントが発火しなくされているので、カレンダーのクリックを監視する
+  const calendarPopup = document.querySelector('span[id^="cal"]')
+  calendarPopup.addEventListener('click', async (event) => {
+    // ポップアップカレンダーはカレンダーアイコンクリック時に動的に作られるため、事前に query~ できない。
+    // そこで Element#matches を使い、クリックされた要素がカレンダー最終行の日付セルであるかを判定する。
+    if (event.srcElement.matches('div[id^="cal"][id$="_pdiv"] > table:last-child > tbody td')) {
+      await render()
+    }
+  })
+
   async function render () {
     text.innerHTML = 'loading...'
     try {
