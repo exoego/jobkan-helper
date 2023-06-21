@@ -8,6 +8,14 @@
   "content_scripts": [
     {
       "matches": [
+        "https://ssl.jobcan.jp/employee/*"
+      ],
+      "js": [
+        "src/sidebar_extra.js"
+      ]
+    },
+    {
+      "matches": [
         "https://ssl.jobcan.jp/employee/holiday/new*"
       ],
       "js": [
