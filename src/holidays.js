@@ -7,8 +7,8 @@ async function fetchAttendanceTable (url) {
   return attendancePageDom.querySelector('#search-result > div.row > div:nth-child(4) > div.card.jbc-card-bordered > div.card-body > table')
 }
 
-async function fetchRemainingHolidays (holidayOptions) {
-  const attendanceTable = await fetchAttendanceTable('https://ssl.jobcan.jp/employee/attendance')
+async function fetchRemainingHolidays (holidayYear, holidayMonth, holidayOptions) {
+  const attendanceTable = await fetchAttendanceTable(`https://ssl.jobcan.jp/employee/attendance?year=${holidayYear}&month=${holidayMonth}`)
   const options = Array
     .from(holidayOptions)
     .map(e => e.innerText.replace(/\(.*/, ''))
@@ -59,28 +59,49 @@ function buildRemainingHolidaysTable (holidays) {
    line-height: 1.4em;
    color: rgb(240, 240, 240);
 `
-  text.innerHTML = 'loading...'
-
   popup.append(text)
+  document.body.appendChild(popup)
 
-  try {
-    const holidayOptions = document.querySelectorAll('#holiday_id option')
-    const holidays = await fetchRemainingHolidays(holidayOptions)
+  const holidayOptions = document.querySelectorAll('#holiday_id option')
+  const yearSelector = document.getElementById('holiday_year')
+  const monthSelector = document.getElementById('holiday_month')
 
-    holidayOptions.forEach(option => {
-      const foundNoRemainingHoliday = holidays.find(holiday => {
-        return option.innerText.includes(holiday.holiday) && holiday.remaining === '0.00'
+  yearSelector.addEventListener('change', render)
+  monthSelector.addEventListener('change', render)
+
+  // ポップアップカレンダーで年月日が変わった時に、change イベントが発火しなくされているので、カレンダーのクリックを監視する
+  const calendarPopup = document.querySelector('span[id^="cal"]')
+  calendarPopup.addEventListener('click', async (event) => {
+    // ポップアップカレンダーはカレンダーアイコンクリック時に動的に作られるため、事前に query~ できない。
+    // そこで Element#matches を使い、クリックされた要素がカレンダー最終行の日付セルであるかを判定する。
+    if (event.srcElement.matches('div[id^="cal"][id$="_pdiv"] > table:last-child > tbody td')) {
+      await render()
+    }
+  })
+
+  async function render () {
+    text.innerHTML = 'loading...'
+    try {
+      const holidayYear = yearSelector.value
+      const holidayMonth = monthSelector.value
+      const holidays = await fetchRemainingHolidays(holidayYear, holidayMonth, holidayOptions)
+      holidayOptions.forEach(option => {
+        const foundNoRemainingHoliday = holidays.find(holiday => {
+          return option.innerText.includes(holiday.holiday) && holiday.remaining === '0.00'
+        })
+        if (foundNoRemainingHoliday) {
+          option.disabled = true
+        } else {
+          option.disabled = false
+        }
       })
-      if (foundNoRemainingHoliday) {
-        option.disabled = true
-      }
-    })
 
-    text.innerHTML = buildRemainingHolidaysTable(holidays)
-  } catch (e) {
-    console.error(e)
-    text.innerHTML = '😱 エラーが発生しました。<br>jobkan-helper にご報告いただけると助かります'
+      text.innerHTML = buildRemainingHolidaysTable(holidays)
+    } catch (e) {
+      console.error(e)
+      text.innerHTML = '😱 エラーが発生しました。<br>jobkan-helper にご報告いただけると助かります'
+    }
   }
 
-  document.body.appendChild(popup)
+  await render()
 })()
